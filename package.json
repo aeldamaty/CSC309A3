@@ -1,0 +1,22 @@
+{
+  "name": "csc309a3",
+  "version": "1.0.0",
+  "description": "",
+  "main": "module.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aeldamaty/CSC309A3.git"
+  },
+  "author": "Aser Eldamaty",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aeldamaty/CSC309A3/issues"
+  },
+  "homepage": "https://github.com/aeldamaty/CSC309A3#readme",
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}
