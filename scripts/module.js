@@ -1,10 +1,22 @@
 $(document).ready(function(){
 	$('#allTweets').click(function(){
-		$.getJSON("./scripts/favs.json", function(result){
+		$.ajax('/getTweets', {
+			success: function(response){
+				//$("#results").append(response);
+				console.log(response.theIDS[0].firstName);
+				//console.log(response.th)
+				/*$.each(response, function(i, tweet){
+					$("#results").append(tweet.employees.firstName + " ");
+				});*/
+				console.log(response);
+				//onsole.log("You pressed all tweets");
+			}
+		});
+		/*$.getJSON("./scripts/favs.json", function(result){
 			$.each(result, function(i, tweet){
 				$("#results").append(tweet.id + " ");
 			});
-		});
+		});*/
 	});
 	$('#allUsers').click(function(){
 		$( "#results" ).empty();
