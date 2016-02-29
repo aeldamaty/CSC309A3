@@ -79,26 +79,30 @@ http.createServer(function (request, response) {
         case "/getTweets":
             if(theRequestedURL.search.length > 1){
                 var lookFor = theRequestedURL.query.tweetid;
-                var text = '{ "theIDS" : [';
+                var found = false;
+                var text = '[';
                 for(i=0; i<obj.length; i++){
-                    if(lookFor==obj[i].id){
+                    if(lookFor==obj[i].id_str){
                         text+= '{ "created_at":"' + obj[i].created_at + '" , "screen_name":"' + obj[i].user.screen_name  + '" , "text":"' + addslashes(obj[i].text) + '" }';
+                        found = true;
                         break;
                     }
                 }
-                text+=' ]}';
+                if(!found)
+                    text+= '{ "error":"' + "204" + '" , "tweetid":"' + "tweet not found" + '" }';
+                text+=' ]';
                 var obj1 = JSON.parse(text);
                 response.setHeader('Content-Type', 'application/json');
                 response.write(JSON.stringify(obj1, null, 3));
                 response.end();
             }
             else{
-                var text = '{ "theIDS" : [';
-                text+= '{ "created_at":"' + obj[0].created_at + '" , "id":"' + obj[0].id  + '" , "text":"' + addslashes(obj[0].text) + '" }';
+                var text = '[';
+                text+= '{ "created_at":"' + obj[0].created_at + '" , "id":"' + obj[0].id_str  + '" , "text":"' + addslashes(obj[0].text) + '" }';
                 for(i=1; i<obj.length; i++){
-                    text+= ',{ "created_at":"' + obj[i].created_at + '" , "id":"' + obj[i].id + '" , "text":"' + addslashes(obj[i].text)   + '" }';
+                    text+= ',{ "created_at":"' + obj[i].created_at + '" , "id":"' + obj[i].id_str + '" , "text":"' + addslashes(obj[i].text)   + '" }';
                 }
-                text+=' ]}';    
+                text+=' ]';    
                 var obj1 = JSON.parse(text);
                 response.setHeader('Content-Type', 'application/json');
                 response.write(JSON.stringify(obj1, null, 3));
@@ -110,10 +114,11 @@ http.createServer(function (request, response) {
             if(theRequestedURL.search.length > 1){
                 var lookFor = theRequestedURL.query.userid;
                 var found = false;
-                var text = '{ "theUsers" : [';
+                var text = '[';//'{ "theUsers" : [';
                 for(i=0; i<obj.length && !found; i++){
                     if(lookFor == obj[i].user.screen_name){
                         text+= '{ "screen_name":"' + obj[i].user.screen_name + '" , "name":"' + obj[i].user.name + '" , "location":"' + obj[i].user.location + '" , "description":"' + obj[i].user.description + '" , "followers_count":"' + obj[i].user.followers_count + '" , "friends_count":"' + obj[i].user.friends_count + '" }';
+                        found = true;
                         break;
                     }
 
@@ -125,7 +130,9 @@ http.createServer(function (request, response) {
                         }
                     }
                 }
-                text+=' ]}';    
+                if(!found)
+                    text+= '{ "error":"' + "204" + '" , "screen_name":"' + "user not found" + '" }';
+                text+=' ]'; //' ]}';    
                 var obj1 = JSON.parse(text);
                 response.setHeader('Content-Type', 'application/json');
                 response.write(JSON.stringify(obj1, null, 3));
@@ -133,7 +140,7 @@ http.createServer(function (request, response) {
             }
             else{
                 var theUsers = [];
-                var text = '{ "theUsers" : [';
+                var text = '[';//'{ "theUsers" : [';
                 for(i=0; i<obj.length; i++){
                     if(theUsers[obj[i].user.id]==null){
                         theUsers[obj[i].user.id]=obj[i].user.screen_name;
@@ -158,7 +165,7 @@ http.createServer(function (request, response) {
 
                 }
                 
-                text+=' ]}';    
+                text+=' ]'; //' ]}';       
                 var obj1 = JSON.parse(text);
                 response.setHeader('Content-Type', 'application/json');
                 response.write(JSON.stringify(obj1, null, 3));
@@ -167,14 +174,14 @@ http.createServer(function (request, response) {
             break;
 
         case "/allLinks":
-            var text = '{ "theLinks" : [';
+            var text = '[';
             for(i=0; i<obj.length; i++){
                 
                 if(i == 0){
-                    text+= '{ "id":"' + obj[i].id + '" , "theURLs" : [';
+                    text+= '{ "id":"' + obj[i].id_str + '" , "theURLs" : [';
                 }
                 else{
-                    text+= ',{ "id":"' + obj[i].id + '" , "theURLs" : [';
+                    text+= ',{ "id":"' + obj[i].id_str + '" , "theURLs" : [';
                 }
 
                 var help = JSON.stringify(obj[i]);
@@ -194,7 +201,7 @@ http.createServer(function (request, response) {
                 text+=' ]}';
                 
             }
-            text+=' ]}';
+            text+=' ]';
             var obj1 = JSON.parse(text);
             response.setHeader('Content-Type', 'application/json');
             response.write(JSON.stringify(obj1, null, 3));
