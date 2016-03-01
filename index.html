@@ -2,38 +2,34 @@
 <html>
 	<head>
 		<title> Twitter API </title>
+		<link rel="stylesheet" href="style.css">
 		<link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.min.css">
-		<!--<link rel="stylesheet" href="style.css">-->
 		
 	</head>
 	
 	<body>
 		<div class="container">
-			<!-- Standard button -->
-			<button type="button" class="btn btn-default" id ="allTweets">All Tweets</button>
+			<form class = "form-inline">
+				<button type="button" class="btn btn-primary" id ="allTweets">All Tweets</button>
+				<button type="button" class="btn btn-primary" id ="allUsers">All Users</button>
+				<button type="button" class="btn btn-primary" id ="allLinks">All External Links</button>
+				
 
-			<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-			<button type="button" class="btn btn-primary" id ="allUsers">All Users</button>
+		  		<div class="form-group">
+			    	<label class="sr-only" for="tweetID">Tweet ID</label>
+			    	<input type="text" class="form-control" id="tweetID" placeholder="Tweet ID">
+			  	</div>
+			  	<button type="button" class="btn btn-primary" id ="tweetDetails">Get Tweet Details</button>
 
-			<!-- Indicates a successful or positive action -->
-			<button type="button" class="btn btn-success" id ="allLinks">All External Links</button>
+			  	<div class="form-group">
+				    <label class="sr-only" for="userName">User Name</label>
+				    <input type="text" class="form-control" id="userName" placeholder="User Name">
+			  	</div>
+			  	<button type="button" class="btn btn-primary" id ="profileInfo">Get Profile Info</button>
 
-			<form class="form-inline">
-			  <div class="form-group">
-			    <label class="sr-only" for="tweetID">Tweet ID</label>
-			    <input type="text" class="form-control" id="tweetID" placeholder="Tweet ID">
-			  </div>
-			  <button type="button" class="btn btn-default" id ="tweetDetails">Get Tweet Details</button>
-			</form>
-
-			<form class="form-inline">
-			  <div class="form-group">
-			    <label class="sr-only" for="userName">User Name</label>
-			    <input type="text" class="form-control" id="userName" placeholder="User Name">
-			  </div>
-			  <button type="button" class="btn btn-default" id ="profileInfo">Get Profile Info</button>
 			</form>
 		</div>
+
 		<div class = "container">
 			<button id = "tPrev" class = "btn btn-primary">Prev</button>
 			<button id = "tNext" class = "btn btn-primary">Next</button>
