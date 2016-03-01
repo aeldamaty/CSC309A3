@@ -27,9 +27,36 @@ http.createServer(function (request, response) {
 
     //console.log(obj[0].id);
 
-    var theRequestedURL = url.parse(request.url, true);
+    var theURL, lookFor;
+    var search = false;
+
+    var directory = path.dirname(request.url);
+    var base = path.basename(request.url);
+
+    console.log(directory + "..." + base);
+    console.log(request.url);
+    if(directory == "/"){
+        if(request.url == "/tweets/" || request.url == "/tweets")
+            theURL = "/tweets";
+        else if(request.url == "/users/" || request.url == "/users")
+            theURL = "/users";
+        else if(request.url == "/links/" || request.url == "/links")
+            theURL = "/links";
+    }
+    else{
+        if(base != ""){
+            lookFor = base;
+            search = true;
+        }
+    }
+
+    console.log("theURL:" + theURL);
+
+    
+
+    //var theRequestedURL = url.parse(request.url, true);
     //console.log(theRequestedURL.pathname);
-    var extname = path.extname(theRequestedURL.pathname);
+    var extname = path.extname(base);
     var contentType = 'text/html';
     switch (extname) {
         case '.js':
@@ -52,7 +79,8 @@ http.createServer(function (request, response) {
             break;
     }
 
-    switch(theRequestedURL.pathname){
+    
+    switch(theURL){
         case "/index.html":
             console.log("here");
             fs.readFile("../index.html", function(error, content) {
@@ -76,9 +104,9 @@ http.createServer(function (request, response) {
             });
             break;
 
-        case "/getTweets":
-            if(theRequestedURL.search.length > 1){
-                var lookFor = theRequestedURL.query.tweetid;
+        case "/tweets":
+            if(search){
+                //var lookFor = theRequestedURL.query.tweetid;
                 var found = false;
                 var text = '[';
                 for(i=0; i<obj.length; i++){
@@ -110,9 +138,9 @@ http.createServer(function (request, response) {
             }
             break;
 
-        case "/getUsers":
-            if(theRequestedURL.search.length > 1){
-                var lookFor = theRequestedURL.query.userid;
+        case "/users":
+            if(search){
+                //var lookFor = theRequestedURL.query.userid;
                 var found = false;
                 var text = '[';//'{ "theUsers" : [';
                 for(i=0; i<obj.length && !found; i++){
@@ -173,7 +201,7 @@ http.createServer(function (request, response) {
             }
             break;
 
-        case "/allLinks":
+        case "/links":
             var text = '[';
             for(i=0; i<obj.length; i++){
                 
@@ -209,7 +237,7 @@ http.createServer(function (request, response) {
             break;
 
         default:
-            var toRead = ".." + theRequestedURL.pathname;
+            var toRead = ".." + request.url;
             if(toRead == '../')
                 toRead = "../index.html";
             fs.readFile(toRead, function(error, content) {

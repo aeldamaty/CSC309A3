@@ -22,7 +22,7 @@ $(document).ready(function(){
 		$("#lNext").hide();
 		$( "#results" ).empty();
 		$( "#theURLS" ).empty();
-		$.ajax('/getTweets', {
+		$.ajax('/tweets', {
 			success: function(response){
 				tIndex = 0;
 				tIndex2 = 0;
@@ -101,7 +101,7 @@ $(document).ready(function(){
 		$( "#results" ).empty();
 		$( "#theURLS" ).empty();
 		
-		$.ajax('/getUsers', {
+		$.ajax('/users', {
 			success: function(response){
 				uIndex = 0;
 				uIndex2 = 0;
@@ -181,7 +181,7 @@ $(document).ready(function(){
 		$( "#results" ).empty();
 		$( "#theURLS" ).empty();
 
-		$.ajax('/allLinks', {
+		$.ajax('/links', {
 			success: function(response){
 				lIndex = 0;
 				lIndex2 = 0;
@@ -279,8 +279,8 @@ $(document).ready(function(){
         	return;
         }
 
-        $.ajax('/getTweets', {
-			data: { "tweetid":value },
+        $.ajax('/tweets/' + value, {
+			/*data: { "tweetid":value },*/
 			success: function(response){
 				if(response.length > 0 && response[0].error == "204")
 					alert("Error 204. No Tweet with the id " + value + " found!");
@@ -309,8 +309,8 @@ $(document).ready(function(){
         	return;
         }
 
-        $.ajax('/getUsers', {
-			data: { "userid":value },
+        $.ajax('/users/' + value, {
+			/*data: { "userid":value },*/
 			success: function(response){
 				if(response.length > 0 && response[0].error == "204")
 					alert("Error 204. No User with the screen_name " + value + " found!");
