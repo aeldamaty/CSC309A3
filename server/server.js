@@ -153,7 +153,9 @@ http.createServer(function (request, response) {
                         found = true;
                         break;
                     }
+                }
 
+                for(i=0; i<obj.length && !found; i++){
                     for(j=0; j < obj[i].entities.user_mentions.length; j++){
                         if(lookFor == obj[i].entities.user_mentions[j].screen_name){
                             text+= '{ "screen_name":"' + obj[i].entities.user_mentions[j].screen_name + '" , "name":"' + obj[i].entities.user_mentions[j].name + '" , "location":"' + obj[i].entities.user_mentions[j].location + '" , "description":"' + obj[i].entities.user_mentions[j].description + '" , "followers_count":"' + obj[i].entities.user_mentions[j].followers_count + '" , "friends_count":"' + obj[i].entities.user_mentions[j].friends_count + '" }';
